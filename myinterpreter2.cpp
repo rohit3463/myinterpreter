@@ -87,31 +87,27 @@ public:
 
       while(this->current_char != '\0')
       {
-		if(isspace(current_char))
+		if(isspace(this->current_char))
 		{
 			this->skip_whitespace();
 			continue;
 		}
 		
-		if(isdigit(current_char))
+		if(isdigit(this->current_char))
 		{
-			this->advance();
 			return Token(INTEGER,this->integer());
 		}
-		if(current_char == '+')
+		if(this->current_char == '+')
 		{
 			this->advance();
             return Token(PLUS,(int)current_char);
 		}
-		if(current_char == '-')
+		if(this->current_char == '-')
 		{    
 			this->advance();
 			return Token(MINUS,(int)current_char);
 		}
-		this->error();
 	  }
-
-	  return Token(EOF,'\0');
 	}
 	void eat(string token_type)
 	{
@@ -152,7 +148,7 @@ public:
 
         if(op.get_type() == PLUS)
         {
-        	result = left.get_value() - '0' + right.get_value() - '0' ;
+        	result = left.get_value() + right.get_value() ;
         }
         else if(op.get_type() == MINUS)
         {
