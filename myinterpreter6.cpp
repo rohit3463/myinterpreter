@@ -119,6 +119,16 @@ public:
 			this->advance();
 			return Token(DIV,(int)current_char);
 		}
+		if(this->current_char == '(')
+		{
+			this->advance();
+			return Token(LPAREN,(int)current_char);
+		}
+		if(this->current_char == ')')
+		{
+			this->advance();
+			return Token(RPAREN,(int)current_char);
+		}
 	  }
 	}
   
@@ -155,8 +165,22 @@ public:
 	char factor()
 	{
 		Token token = this->current_token;
-		this->eat(INTEGER);
-		return token.get_value();
+		if(token.get_type() == LPAREN || token.get_type() == INTEGER)
+		{
+		  if(token.get_type() == INTEGER)
+		  {
+		  	this->eat(INTEGER);
+		  	return token.get_value();
+		  }
+		  else if(token.get_type() == LPAREN)
+		  {
+		  	this->eat(LPAREN);
+		  	int result = this->expr();
+		  	this->eat(RPAREN);
+		  	return result;
+		  }
+		}
+		
 	}
 	int term()
 	{
