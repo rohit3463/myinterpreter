@@ -7,6 +7,8 @@
 #define DIV "DIV"
 #define EOF "EOF"
 #define MUL "MUL"
+#define PLUS "PLUS"
+#define MINUS "MINUS"
 
 using namespace std;
 
@@ -95,6 +97,16 @@ public:
 		{
 			return Token(INTEGER,this->integer());
 		}
+		if(this->current_char == '+')
+		{
+			this->advance();
+			return Token(PLUS,(int)current_char);
+		}
+		if(this->current_char == '-')
+		{
+			this->advance();
+			return Token(MINUS,(int)current_char);
+		}
 		if(this->current_char == '*')
 		{
 			this->advance();
@@ -144,7 +156,7 @@ public:
 		this->eat(INTEGER);
 		return token.get_value();
 	}
-	int expr()
+	int term()
 	{
 
 		int result = this->factor();
@@ -167,6 +179,27 @@ public:
 
 		return result;
 
+	}
+	int expr()
+	{
+		int result = this->term();
+
+		while(this->current_token.get_type() == PLUS || this->current_token.get_type() == MINUS)
+		{
+			Token token = this->current_token;
+
+			if(token.get_type() == PLUS)
+			{
+				this->eat(PLUS);
+				result += this->term();
+			}
+			else if(token.get_type() == MINUS)
+			{
+				this->eat(MINUS);
+				result -= this->term();
+			}
+		}
+		return result;
 	}
 };
 
