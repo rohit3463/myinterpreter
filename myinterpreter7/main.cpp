@@ -5,7 +5,7 @@ int main(){
 	std:: string input;
 	int result;
 	while(1){
-		std::cout<<"RCalc> ";
+		std::cout<<"Calcgo> ";
 		getline(std::cin, input, '\n');
 
 		if(input == "exit" || input=="quit") {
