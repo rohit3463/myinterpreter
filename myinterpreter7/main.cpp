@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Interpreter.h"
+#include "interpreter.h"
 
 int main(){
 	std:: string input;
